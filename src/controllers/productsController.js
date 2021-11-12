@@ -81,13 +81,21 @@ const controller = {
 	
 	// Update - Method to update
 	update: (req, res) => {
+		const file = req.file;
 		let id = req.params.id;
 		let productToEdit = products.filter(product => product.id == id)[0];
 		let productsUpdated = products.filter(product => product.id != id)
+
+		let imageNew = productToEdit.image
+
+		if(file){
+			imageNew = req.file.filename;
+		}
+
 		let product = {
 			id : productToEdit.id,
 			...req.body,
-			image: productToEdit.image
+			image: imageNew
 		}
 		productsUpdated.push(product)
 		
